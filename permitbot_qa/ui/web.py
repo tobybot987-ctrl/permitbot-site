@@ -4,10 +4,9 @@ from pathlib import Path
 import tempfile
 
 import yaml
-from fastapi import FastAPI, File, Form, UploadFile
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, File, Form, UploadFile, Request
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
-from fastapi import Request
 
 from models import Pack
 from ingest.pdf_ingest import parse_pdfs, extract_claims
@@ -17,6 +16,7 @@ from report.generate import write_reports
 
 app = FastAPI(title="PermitBot QA MVP")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
+RUNS_DIR = Path("runs")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -26,8 +26,28 @@ def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request, "jurisdictions": jurisdictions})
 
 
+@app.get("/permitbot-logo.svg")
+def logo():
+    # repo-level logo
+    candidate = Path(__file__).resolve().parents[2] / "permitbot-logo.svg"
+    if candidate.exists():
+        return FileResponse(candidate)
+    return FileResponse(Path(__file__).resolve().parents[2] / "permitbot-logo.svg")
+
+
+@app.get("/runs/{run_id}/report.html")
+def report_html(run_id: str):
+    return FileResponse(RUNS_DIR / run_id / "report.html")
+
+
+@app.get("/runs/{run_id}/result.json")
+def report_json(run_id: str):
+    return FileResponse(RUNS_DIR / run_id / "result.json", media_type="application/json", filename=f"{run_id}.json")
+
+
 @app.post("/run", response_class=HTMLResponse)
 async def run(
+    request: Request,
     jurisdiction: str = Form(...),
     project_type: str = Form("all"),
     secondary_packs: str = Form(""),
@@ -60,7 +80,6 @@ async def run(
         pages = parse_pdfs(pdf_paths)
         claims = extract_claims(pages)
         result = run_check(primary, secondary_objs, claims, project_type)
-        json_path, html_path = write_reports(result, Path("runs") / result.run_id)
+        write_reports(result, RUNS_DIR / result.run_id)
 
-    html = html_path.read_text()
-    return HTMLResponse(html)
+    return templates.TemplateResponse("result.html", {"request": request, "run_id": result.run_id})
