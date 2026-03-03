@@ -9,6 +9,9 @@ dependencies = [
   "jinja2>=3.1",
   "pypdf>=5.0",
   "pyyaml>=6.0",
+  "python-multipart>=0.0.20",
+  "uvicorn>=0.35",
+  "fastapi>=0.116",
 ]
 
 [project.scripts]

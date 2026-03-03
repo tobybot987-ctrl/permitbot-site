@@ -74,3 +74,12 @@ pytest
 - Default uses latest versioned pack for that jurisdiction.
 - `--refresh-pack` triggers an ingestion/build step before checks.
 - Runtime check engine still uses only versioned artifacts (no direct live-scrape during compare).
+
+
+## Minimal Web UI
+Run locally:
+```bash
+source .venv/bin/activate
+uvicorn ui.web:app --reload --port 8080
+```
+Then open http://localhost:8080 and upload PDFs, choose jurisdiction, and run Check 01.

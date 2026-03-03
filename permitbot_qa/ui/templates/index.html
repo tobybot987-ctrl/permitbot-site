@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>PermitBot QA Runner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>body{font-family:system-ui;margin:2rem;max-width:900px} label{display:block;margin:.6rem 0 .2rem} input,select{width:100%;padding:.5rem} .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}</style>
+</head>
+<body>
+  <h1>PermitBot QA – Run Checks</h1>
+  <form action="/run" method="post" enctype="multipart/form-data">
+    <label>Jurisdiction</label>
+    <select name="jurisdiction" required>
+      {% for j in jurisdictions %}
+      <option value="{{j}}">{{j}}</option>
+      {% endfor %}
+    </select>
+
+    <div class="row">
+      <div>
+        <label>Project type</label>
+        <input name="project_type" value="all" />
+      </div>
+      <div>
+        <label>Secondary packs (optional, comma-separated name@version)</label>
+        <input name="secondary_packs" placeholder="city-a@20260301, district-b@20260302" />
+      </div>
+    </div>
+
+    <label><input type="checkbox" name="refresh_pack" value="1" /> Refresh jurisdiction pack before run</label>
+
+    <label>Upload 1–3 PDFs</label>
+    <input type="file" name="pdfs" accept="application/pdf" multiple required />
+
+    <button style="margin-top:1rem;padding:.7rem 1rem">Run Check 01 (storm_event_retention)</button>
+  </form>
+</body>
+</html>
