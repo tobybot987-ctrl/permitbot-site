@@ -1,0 +1,21 @@
+[project]
+name = "permitbot-qa"
+version = "0.1.0"
+description = "PermitBot QA MVP rule-pack discrepancy detector"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.8",
+  "typer>=0.12",
+  "jinja2>=3.1",
+  "pypdf>=5.0",
+]
+
+[project.scripts]
+permitbot = "ui.cli:app"
+
+[tool.setuptools]
+py-modules = ["models"]
+packages = ["pack_builder", "ingest", "engine", "report", "ui"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Required design storm event",
+    "jurisdiction": "sample-fl",
+    "applicability": ["all"],
+    "trigger": "storm_event_retention",
+    "requirement_type": "text",
+    "parameters": {"required": "100-year/24-hour", "claim_key": "design_storm_event"},
+    "precedence": 1,
+    "source_url": "https://example.gov/code/storm",
+    "source_excerpt": "Design must be based on the 100-year/24-hour storm event.",
+    "last_verified_date": "2026-03-03"
+  },
+  {
+    "title": "Minimum retention provided",
+    "jurisdiction": "sample-fl",
+    "applicability": ["all"],
+    "trigger": "storm_event_retention",
+    "requirement_type": "numeric",
+    "parameters": {"required": 5000, "claim_key": "retention_provided_value"},
+    "precedence": 2,
+    "source_url": "https://example.gov/code/retention",
+    "source_excerpt": "Minimum onsite retention volume is 5,000 cf.",
+    "last_verified_date": "2026-03-03"
+  }
+]

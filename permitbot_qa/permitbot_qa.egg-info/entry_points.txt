@@ -1,0 +1,2 @@
+[console_scripts]
+permitbot = ui.cli:app
