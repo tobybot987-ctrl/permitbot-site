@@ -57,7 +57,7 @@ pip install -e . pytest
 permitbot build-pack --name sample-fl --sources samples/sources.sample.json
 
 # Run check against PDFs (comma-separated)
-permitbot run-check --pack sample-fl@<version> --pdfs ../samples/drainage.pdf,../samples/calcs.pdf --check storm_event_retention
+permitbot run-check --jurisdiction sample-fl --pdfs ../samples/drainage.pdf,../samples/calcs.pdf --check storm_event_retention
 
 # Tests
 pytest
@@ -67,3 +67,10 @@ pytest
 - Pack artifacts write to `packs/<name>/<version>/pack.json`
 - Run output writes to `runs/<run_id>/{result.json,report.html}`
 - Current extraction is deterministic regex-based MVP for Check 01.
+
+
+### New runtime behavior
+- User selects `--jurisdiction` (required).
+- Default uses latest versioned pack for that jurisdiction.
+- `--refresh-pack` triggers an ingestion/build step before checks.
+- Runtime check engine still uses only versioned artifacts (no direct live-scrape during compare).

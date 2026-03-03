@@ -1,0 +1,7 @@
+jurisdictions:
+  sample-fl:
+    display_name: "Sample Florida"
+    default_pack: "sample-fl"
+    sources_file: "samples/sources.sample.json"
+    precedence: ["primary", "secondary_stricter"]
+    stale_after_days: 14
