@@ -1,9 +1,0 @@
-Metadata-Version: 2.4
-Name: permitbot-qa
-Version: 0.1.0
-Summary: PermitBot QA MVP rule-pack discrepancy detector
-Requires-Python: >=3.11
-Requires-Dist: pydantic>=2.8
-Requires-Dist: typer>=0.12
-Requires-Dist: jinja2>=3.1
-Requires-Dist: pypdf>=5.0

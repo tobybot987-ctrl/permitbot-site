@@ -1,6 +1,0 @@
-engine
-ingest
-models
-pack_builder
-report
-ui
