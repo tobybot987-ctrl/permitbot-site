@@ -6,6 +6,7 @@ from pathlib import Path
 from jinja2 import Template
 
 from models import RunResult
+from report.storage import upload_if_configured
 
 HTML_TEMPLATE = """
 <html><body>
@@ -38,4 +39,8 @@ def write_reports(run: RunResult, out_dir: Path) -> tuple[Path, Path]:
     counts = Counter([f.severity.value for f in run.findings])
     html = Template(HTML_TEMPLATE).render(run=run, counts=counts)
     html_path.write_text(html)
+
+    upload_if_configured(json_path, f"runs/{run.run_id}/result.json")
+    upload_if_configured(html_path, f"runs/{run.run_id}/report.html")
+
     return json_path, html_path

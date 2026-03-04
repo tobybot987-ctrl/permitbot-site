@@ -83,3 +83,16 @@ source .venv/bin/activate
 uvicorn ui.web:app --reload --port 8080
 ```
 Then open http://localhost:8080 and upload PDFs, choose jurisdiction, and run Check 01.
+
+
+## AWS Baseline (started)
+Infrastructure scaffolding is in `infra/terraform/` for:
+- S3 artifact storage
+- SQS job queues
+- module placeholders for VPC/DB/compute
+
+Runtime supports optional AWS integrations today:
+- `S3_BUCKET` (+ `AWS_REGION`, `S3_PREFIX`) for report artifact upload
+- `DATABASE_URL` for run summary persistence
+
+If these env vars are absent, app falls back to local disk-only mode.

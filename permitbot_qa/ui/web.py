@@ -14,6 +14,7 @@ from engine.check01 import run_check
 from jobs.pack_refresh import ensure_pack
 from report.generate import write_reports
 from report.notify import send_resend_notification
+from report.db import save_run_summary
 from ui.observability import init_sentry
 
 app = FastAPI(title="PermitBot QA MVP")
@@ -84,6 +85,7 @@ async def run(
         claims = extract_claims(pages)
         result = run_check(primary, secondary_objs, claims, project_type)
         write_reports(result, RUNS_DIR / result.run_id)
+        save_run_summary(result.run_id, result.project_type, len(result.findings))
         send_resend_notification(subject=f"PermitBot QA run {result.run_id}", html=f"<p>Run complete: {result.run_id}</p><p>Findings: {len(result.findings)}</p>")
 
     return templates.TemplateResponse("result.html", {"request": request, "run_id": result.run_id})
