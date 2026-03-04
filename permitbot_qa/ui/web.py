@@ -4,8 +4,11 @@ from pathlib import Path
 import tempfile
 
 import yaml
-from fastapi import FastAPI, File, Form, UploadFile, Request
+from fastapi import FastAPI, File, Form, UploadFile, Request, Depends, HTTPException, status
 from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+import secrets
+import os
 from fastapi.templating import Jinja2Templates
 
 from models import Pack
@@ -20,11 +23,27 @@ from ui.observability import init_sentry
 app = FastAPI(title="PermitBot QA MVP")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 RUNS_DIR = Path("runs")
+
+security = HTTPBasic()
+
+
+def require_auth(credentials: HTTPBasicCredentials = Depends(security)):
+    user = os.getenv("APP_BASIC_USER", "master")
+    pwd = os.getenv("APP_BASIC_PASS", "permitbot")
+    ok_user = secrets.compare_digest(credentials.username, user)
+    ok_pass = secrets.compare_digest(credentials.password, pwd)
+    if not (ok_user and ok_pass):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+    return credentials.username
 init_sentry()
 
 
 @app.get("/", response_class=HTMLResponse)
-def home(request: Request):
+def home(request: Request, _user: str = Depends(require_auth)):
     cfg = yaml.safe_load(Path("config/jurisdictions.yaml").read_text())
     jurisdictions = sorted(cfg.get("jurisdictions", {}).keys())
     return templates.TemplateResponse("index.html", {"request": request, "jurisdictions": jurisdictions})
@@ -40,18 +59,19 @@ def logo():
 
 
 @app.get("/runs/{run_id}/report.html")
-def report_html(run_id: str):
+def report_html(run_id: str, _user: str = Depends(require_auth)):
     return FileResponse(RUNS_DIR / run_id / "report.html")
 
 
 @app.get("/runs/{run_id}/result.json")
-def report_json(run_id: str):
+def report_json(run_id: str, _user: str = Depends(require_auth)):
     return FileResponse(RUNS_DIR / run_id / "result.json", media_type="application/json", filename=f"{run_id}.json")
 
 
 @app.post("/run", response_class=HTMLResponse)
 async def run(
     request: Request,
+    _user: str = Depends(require_auth),
     jurisdiction: str = Form(...),
     project_type: str = Form("all"),
     secondary_packs: str = Form(""),
