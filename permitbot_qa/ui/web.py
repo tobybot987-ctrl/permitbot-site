@@ -2,14 +2,14 @@ from __future__ import annotations
 
 from pathlib import Path
 import tempfile
-
-import yaml
-from fastapi import FastAPI, File, Form, UploadFile, Request, Depends, HTTPException, status
-from fastapi.responses import HTMLResponse, FileResponse
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
 import secrets
 import os
+
+import yaml
+from fastapi import FastAPI, File, Form, UploadFile, Request, Depends, HTTPException, status, Response, Cookie
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from models import Pack
 from ingest.pdf_ingest import parse_pdfs, extract_claims
@@ -19,17 +19,37 @@ from report.generate import write_reports
 from report.notify import send_resend_notification
 from report.db import save_run_summary
 from ui.observability import init_sentry
+from ui.supabase_auth import enabled as supabase_enabled, password_sign_in, token_user
 
 app = FastAPI(title="PermitBot QA MVP")
 templates = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 RUNS_DIR = Path("runs")
+init_sentry()
 
 security = HTTPBasic()
 
 
-def require_auth(credentials: HTTPBasicCredentials = Depends(security)):
+def require_auth(
+    request: Request,
+    credentials: HTTPBasicCredentials | None = Depends(security),
+    sb_access_token: str | None = Cookie(default=None),
+):
+    if supabase_enabled():
+        token = sb_access_token
+        if token:
+            user = token_user(token)
+            if user:
+                return user.get("email", "supabase-user")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Unauthorized",
+            headers={"WWW-Authenticate": "Basic"},
+        )
+
     user = os.getenv("APP_BASIC_USER", "master")
     pwd = os.getenv("APP_BASIC_PASS", "permitbot")
+    if not credentials:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Unauthorized")
     ok_user = secrets.compare_digest(credentials.username, user)
     ok_pass = secrets.compare_digest(credentials.password, pwd)
     if not (ok_user and ok_pass):
@@ -39,7 +59,23 @@ def require_auth(credentials: HTTPBasicCredentials = Depends(security)):
             headers={"WWW-Authenticate": "Basic"},
         )
     return credentials.username
-init_sentry()
+
+
+@app.get("/login", response_class=HTMLResponse)
+def login_page(request: Request):
+    if not supabase_enabled():
+        return HTMLResponse("<p>Supabase auth not enabled. Use basic auth.</p>")
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@app.post("/login")
+def login_submit(email: str = Form(...), password: str = Form(...)):
+    token = password_sign_in(email, password)
+    if not token:
+        return HTMLResponse("<p>Login failed</p><a href='/login'>Try again</a>", status_code=401)
+    resp = RedirectResponse(url="/", status_code=303)
+    resp.set_cookie("sb_access_token", token, httponly=True, secure=False, samesite="lax")
+    return resp
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -51,11 +87,8 @@ def home(request: Request, _user: str = Depends(require_auth)):
 
 @app.get("/permitbot-logo.svg")
 def logo():
-    # repo-level logo
     candidate = Path(__file__).resolve().parents[2] / "permitbot-logo.svg"
-    if candidate.exists():
-        return FileResponse(candidate)
-    return FileResponse(Path(__file__).resolve().parents[2] / "permitbot-logo.svg")
+    return FileResponse(candidate)
 
 
 @app.get("/runs/{run_id}/report.html")
