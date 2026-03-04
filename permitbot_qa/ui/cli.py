@@ -9,8 +9,10 @@ from engine.check01 import run_check
 from report.generate import write_reports
 from models import Pack
 from jobs.pack_refresh import ensure_pack, load_jurisdiction
+from ui.observability import init_sentry
 
 app = typer.Typer()
+init_sentry()
 
 
 @app.command("build-pack")
