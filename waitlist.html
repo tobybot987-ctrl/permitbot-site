@@ -34,14 +34,37 @@
     </header>
 
     <main class="flex-1">
-      <div class="max-w-3xl mx-auto px-4 py-12">
-        <h1 class="text-3xl font-semibold tracking-tight">PermitBot QA Waitlist</h1>
-        <p class="mt-3 text-sm text-slate-700 max-w-2xl">
-          Join early access for rule-pack based discrepancy detection for stormwater submittals.
-          We’ll email updates and pilot invites.
-        </p>
+      <div class="max-w-3xl mx-auto px-4 py-12 space-y-6">
+        <div class="space-y-3">
+          <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Pre-submittal compliance</p>
+          <h1 class="text-3xl font-semibold tracking-tight">PermitBot QA Waitlist</h1>
+          <p class="text-sm text-slate-700 max-w-2xl">
+            PermitBot QA surfaces the same findings your reviewers cite — but before you submit. We codify local statutes, scan plan sets for mismatches, and replay reviewer comment patterns so PMs can deliver reviewer-ready evidence.
+          </p>
+        </div>
 
-        <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+          <div class="grid gap-4 sm:grid-cols-3 text-sm text-slate-600">
+            <div>
+              <p class="text-xs uppercase tracking-[0.3em] text-emerald-600">Layer 1</p>
+              <p class="font-semibold">Hard Rule Inspection</p>
+              <p class="text-xs">Volusia LDC §72 + SJRWMD ERP requirements rendered as deterministic checks.</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-[0.3em] text-sky-600">Layer 2</p>
+              <p class="font-semibold">Plan Consistency</p>
+              <p class="text-xs">Cross-sheet deltas for FFE, routing, structure IDs, drainage areas.</p>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-[0.3em] text-purple-600">Layer 3</p>
+              <p class="font-semibold">Reviewer Pattern Library</p>
+              <p class="text-xs">Codified comment history (maintenance notes, arrows, details) for your agencies.</p>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500">Outputs are evidence-backed QA memos — never approvals.</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
           <form action="https://formspree.io/f/xbdzrjdd" method="POST" class="space-y-4">
             <input type="hidden" name="product" value="PermitBot QA Waitlist" />
             <input type="hidden" name="_subject" value="New PermitBot QA waitlist signup" />
@@ -63,13 +86,13 @@
               </div>
               <div>
                 <label class="block text-xs font-semibold mb-1">Role</label>
-                <input name="role" placeholder="EIT, PM, Principal, Reviewer" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
+                <input name="role" placeholder="PM, Principal, Reviewer" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" />
               </div>
             </div>
 
             <div>
               <label class="block text-xs font-semibold mb-1">What jurisdiction(s) matter most?</label>
-              <textarea name="jurisdictions" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" placeholder="Ex: County, City, Jurisdiction"></textarea>
+              <textarea name="jurisdictions" rows="3" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm" placeholder="Ex: Volusia County, SJRWMD, City of ..."></textarea>
             </div>
 
             <button type="submit" class="rounded-full bg-brand-teal px-5 py-2 text-sm font-semibold text-brand-dark hover:bg-[#00B7CC]">

@@ -7,17 +7,21 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-900">
-  <div class="max-w-5xl mx-auto px-4 py-8">
-    <h1 class="text-2xl font-semibold">Run Complete</h1>
-    <p class="text-sm text-slate-600 mt-1">Run ID: {{ run_id }}</p>
+  <div class="max-w-5xl mx-auto px-4 py-8 space-y-4">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Pre-submittal compliance check</p>
+      <h1 class="text-2xl font-semibold">Run complete</h1>
+      <p class="text-sm text-slate-600 mt-1">Run ID: {{ run_id }} · Layers: Hard Rule (active), Plan Consistency + Reviewer Pattern (coming online)</p>
+      <p class="text-xs text-slate-500">PermitBot QA outputs reviewer-ready evidence. Findings are guidance, not approvals.</p>
+    </div>
 
-    <div class="mt-4 flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-3">
       <a href="/runs/{{ run_id }}/report.html" class="rounded-full bg-black text-white px-4 py-2 text-sm">Open HTML report</a>
       <a href="/runs/{{ run_id }}/result.json" class="rounded-full border px-4 py-2 text-sm">Download JSON</a>
       <a href="/" class="rounded-full border px-4 py-2 text-sm">Run another check</a>
     </div>
 
-    <iframe src="/runs/{{ run_id }}/report.html" class="mt-6 w-full h-[70vh] border rounded-xl bg-white"></iframe>
+    <iframe src="/runs/{{ run_id }}/report.html" class="w-full h-[70vh] border rounded-xl bg-white"></iframe>
   </div>
 </body>
 </html>

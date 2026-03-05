@@ -12,10 +12,32 @@
   </script>
 </head>
 <body class="bg-brand-bg text-brand-dark antialiased">
-  <div class="max-w-4xl mx-auto px-4 py-8">
-    <div class="flex items-center gap-3 mb-6">
+  <div class="max-w-4xl mx-auto px-4 py-8 space-y-8">
+    <div class="flex items-center gap-3">
       <img src="/permitbot-logo.svg" class="h-10" alt="PermitBot" />
-      <h1 class="text-2xl font-semibold">PermitBot QA Runner</h1>
+      <div>
+        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Pre-submittal compliance checks</p>
+        <h1 class="text-2xl font-semibold">PermitBot QA Runner</h1>
+        <p class="text-sm text-slate-600">Upload stormwater/site PDFs for Volusia County + SJRWMD and receive evidence-backed findings before the package leaves the office.</p>
+      </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-white/40 bg-white/80 p-4 text-sm shadow-sm">
+        <p class="text-xs font-semibold text-emerald-600">Layer 1</p>
+        <h2 class="font-semibold mt-1">Hard Rule Inspection</h2>
+        <p class="text-slate-600 mt-2">Deterministic calculations vs. statutory requirements (Volusia LDC §72, SJRWMD ERP). Each finding cites the clause + page.</p>
+      </article>
+      <article class="rounded-2xl border border-white/40 bg-white/80 p-4 text-sm shadow-sm">
+        <p class="text-xs font-semibold text-sky-600">Layer 2</p>
+        <h2 class="font-semibold mt-1">Plan Consistency</h2>
+        <p class="text-slate-600 mt-2">Cross-sheet comparisons for FFE, routing, structure IDs, and detail references. (Coming online next.)</p>
+      </article>
+      <article class="rounded-2xl border border-white/40 bg-white/80 p-4 text-sm shadow-sm">
+        <p class="text-xs font-semibold text-purple-600">Layer 3</p>
+        <h2 class="font-semibold mt-1">Reviewer Pattern Library</h2>
+        <p class="text-slate-600 mt-2">Recurring reviewer notes (maintenance, drainage arrows, etc.) captured as deterministic prompts. (Scaffolding in progress.)</p>
+      </article>
     </div>
 
     <form action="/run" method="post" enctype="multipart/form-data" class="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
@@ -39,14 +61,16 @@
         </div>
       </div>
 
-      <label class="text-sm"><input type="checkbox" name="refresh_pack" value="1" class="mr-2"/>Refresh jurisdiction pack before run</label>
+      <label class="text-xs text-slate-600"><input type="checkbox" name="refresh_pack" value="1" class="mr-2"/>Refresh jurisdiction pack before run (builds latest rules from curated sources).</label>
 
       <div>
         <label class="block text-xs font-semibold mb-1">Upload 1–3 PDFs</label>
         <input type="file" name="pdfs" accept="application/pdf" multiple required class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm bg-white"/>
+        <p class="text-[11px] text-slate-500 mt-1">Keep drainage report, plan set, and calcs grouped per run.</p>
       </div>
 
-      <button class="rounded-full bg-brand-teal px-5 py-2 text-sm font-semibold text-brand-dark hover:bg-[#00B7CC]">Run Check 01 (storm_event_retention)</button>
+      <button class="rounded-full bg-brand-teal px-5 py-2 text-sm font-semibold text-brand-dark hover:bg-[#00B7CC]">Run pre-submittal checks</button>
+      <p class="text-[11px] uppercase tracking-[0.3em] text-slate-500">Outputs = reviewer-ready evidence, not approvals.</p>
     </form>
   </div>
 </body>
