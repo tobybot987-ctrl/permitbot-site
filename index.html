@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PermitBot – Volusia & Flagler Permit Assistant</title>
+  <title>PermitBot – Automated pre-submittal compliance checks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Rule-pack based discrepancy detection for civil submittals across disciplines." />
+  <meta name="description" content="PermitBot runs three-layer automated compliance checks for Volusia County and SJRWMD submittals before you ever upload to the portal." />
 
   <!-- Tailwind CDN + config -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -27,19 +27,16 @@
 <body class="bg-brand-bg text-brand-dark antialiased">
   <div class="min-h-screen flex flex-col">
     <!-- Header -->
-    <header class="border-b border-slate-200 bg-brand-bg">
+    <header class="border-b border-slate-200 bg-brand-bg/80 backdrop-blur-sm sticky top-0 z-10">
       <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <a href="index.html" class="flex items-center gap-3">
           <img src="permitbot-logo.svg" alt="PermitBot logo" class="h-10 w-auto" />
+          <span class="sr-only">PermitBot</span>
         </a>
         <div class="flex items-center gap-3 text-xs">
           <a href="login.html"
-             class="rounded-full bg-brand-teal px-3 py-1.5 text-brand-dark font-semibold hover:bg-[#00B7CC]">
+             class="rounded-full border border-slate-400 px-3 py-1.5 text-brand-dark hover:border-brand-teal">
             Log in
-          </a>
-          <a href="waitlist.html"
-             class="rounded-full border border-brand-teal px-3 py-1.5 text-brand-dark hover:bg-brand-teal/10">
-            QA Waitlist
           </a>
         </div>
       </div>
@@ -47,55 +44,172 @@
 
     <!-- Main -->
     <main class="flex-1">
-      <div class="max-w-5xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-[3fr,2fr] items-center">
-        <section class="space-y-4">
-          <h1 class="text-3xl md:text-4xl font-semibold tracking-tight">
-            PermitBot QA for civil firms:<br />
-            Evidence-based discrepancy detection across civil submittals.
+      <!-- Hero -->
+      <section class="max-w-5xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-[3fr,2.2fr] items-center">
+        <div class="space-y-5">
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white/60 px-3 py-1 text-[11px] uppercase tracking-wide text-slate-600">
+            Focus markets: Volusia County · SJRWMD
+          </span>
+          <h1 class="text-3xl md:text-4xl font-semibold tracking-tight leading-tight">
+            Automated pre-submittal compliance checks
           </h1>
-          <div class="h-1 w-24 bg-brand-teal rounded-full"></div>
-          <p class="text-sm leading-relaxed text-slate-700 max-w-xl">
-            Upload reports, calculations, and plan PDFs to run rule-pack checks that flag potential issues, missing evidence, and inconsistencies — with citations to source rules and document pages.
+          <p class="text-sm md:text-base leading-relaxed text-slate-700 max-w-xl">
+            PermitBot reviews stormwater and site packages before you upload to ePlans. We run rule-backed, document-aware checks tailored to Volusia County and SJRWMD so you can submit with reviewer-ready evidence on day one.
           </p>
           <ul class="text-sm text-slate-700 space-y-1">
-            <li>• Built for civil engineering workflows and jurisdiction-specific rule packs</li>
-            <li>• Start with stormwater checks, then expand to utilities, grading, roadway, and more</li>
-            <li>• Evidence-first findings with page references and rule excerpts</li>
+            <li>• Three-layer QA: statutory hard rules, plan set consistency, reviewer pattern memory</li>
+            <li>• Citations to handbooks, ordinances, and sheet/page references</li>
+            <li>• Built for civil PMs who need confidence before routing to clients or reviewers</li>
           </ul>
-          <div class="flex flex-wrap gap-3 pt-2">
-            <a href="waitlist.html"
-               class="rounded-full bg-brand-teal px-5 py-2 text-sm font-semibold text-brand-dark hover:bg-[#00B7CC]">
-              Join PermitBot QA waitlist
-            </a>
-            <a href="login.html"
-               class="rounded-full border border-slate-400 px-5 py-2 text-sm text-brand-dark hover:border-brand-teal">
-              Log in to dashboard
-            </a>
+          <div class="space-y-4">
+            <div class="flex flex-wrap gap-3">
+              <button form="hero-waitlist" type="submit"
+                      class="rounded-full bg-brand-teal px-5 py-2 text-sm font-semibold text-brand-dark hover:bg-[#00B7CC] shadow">
+                Get early access
+              </button>
+              <a href="waitlist.html"
+                 class="rounded-full border border-slate-400 px-5 py-2 text-sm text-brand-dark hover:border-brand-teal">
+                View waitlist details
+              </a>
+            </div>
+            <p class="text-[11px] uppercase tracking-[0.2em] text-slate-500">Trusted by firms piloting Volusia &amp; SJRWMD packages</p>
           </div>
-        </section>
+        </div>
 
-        <section class="space-y-3">
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 text-sm shadow-sm">
-            <h2 class="text-xs font-semibold text-slate-800 mb-2">What PermitBot QA does</h2>
-            <ul class="text-xs text-slate-700 space-y-1">
-              <li>• Compare civil submittal documents against selected rule packs</li>
-              <li>• Return FAIL / WARN / UNKNOWN / PASS by discipline and check</li>
-              <li>• Show comparison logic and recommended action per finding</li>
-              <li>• Export evidence-backed HTML + JSON reports for internal QA</li>
-            </ul>
+        <div class="space-y-4">
+          <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500">
+              <span>Pre-submittal dossier</span>
+              <span class="font-semibold text-emerald-600">92% ready</span>
+            </div>
+            <div class="mt-4 space-y-3 text-sm">
+              <div class="rounded-2xl bg-slate-50 px-4 py-3">
+                <p class="text-xs font-semibold text-slate-600">Hard rule inspection</p>
+                <p class="text-base font-bold text-slate-900">15 / 15 critical checks pass</p>
+                <p class="text-xs text-slate-500">Volusia County LDC §72-620</p>
+              </div>
+              <div class="rounded-2xl bg-slate-50 px-4 py-3">
+                <p class="text-xs font-semibold text-slate-600">Plan consistency scan</p>
+                <p class="text-base font-bold text-slate-900">3 cross-sheet discrepancies flagged</p>
+                <p class="text-xs text-slate-500">Sheet C3.2 ↔ Sheet SW-07 references</p>
+              </div>
+              <div class="rounded-2xl bg-slate-50 px-4 py-3">
+                <p class="text-xs font-semibold text-slate-600">Reviewer pattern library</p>
+                <p class="text-base font-bold text-slate-900">SJRWMD stormwater uplift applied</p>
+                <p class="text-xs text-slate-500">Adds notes from last 14 approvals</p>
+              </div>
+            </div>
           </div>
-          <div class="rounded-2xl border border-dashed border-brand-teal/60 bg-white/70 p-4 text-xs text-slate-700">
-            <span class="font-semibold text-slate-900">Coming soon:</span> Expanded civil check libraries, multi-pack conflict handling, and firm-level QA dashboards.
+
+          <form id="hero-waitlist" action="https://formspree.io/f/xbdzrjdd" method="POST" class="rounded-3xl border border-dashed border-brand-teal/60 bg-white/70 p-5 space-y-3 text-sm">
+            <input type="hidden" name="product" value="PermitBot QA Waitlist" />
+            <input type="hidden" name="_subject" value="New PermitBot QA waitlist signup" />
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Early Access</p>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold">Name</label>
+              <input name="name" required class="w-full rounded-2xl border border-slate-300 px-3 py-2 text-sm" placeholder="Dana Reynolds" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold">Work email</label>
+              <input name="email" type="email" required class="w-full rounded-2xl border border-slate-300 px-3 py-2 text-sm" placeholder="dana@firm.com" />
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-semibold">Jurisdiction focus</label>
+              <input name="jurisdictions" class="w-full rounded-2xl border border-slate-300 px-3 py-2 text-sm" placeholder="Volusia County, SJRWMD" />
+            </div>
+            <button type="submit" class="w-full rounded-full bg-brand-teal px-5 py-2 text-sm font-semibold text-brand-dark hover:bg-[#00B7CC]">
+              Join the waitlist
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Three-layer value props -->
+      <section class="bg-white/70 border-y border-slate-200 py-12">
+        <div class="max-w-5xl mx-auto px-4">
+          <div class="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Three-layer checks</p>
+              <h2 class="text-2xl font-semibold tracking-tight">Evidence for every reviewer comment before it happens</h2>
+            </div>
+            <span class="text-xs text-slate-500">Hard rules · Plan consistency · Reviewer patterns</span>
           </div>
-        </section>
-      </div>
+          <div class="mt-8 grid gap-5 md:grid-cols-3">
+            <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+              <p class="text-xs font-semibold text-emerald-600">Layer 1 · Hard rule inspection</p>
+              <h3 class="mt-2 text-lg font-semibold">Statutory certainty</h3>
+              <p class="mt-3 text-sm text-slate-600">Codifies Volusia County LDC §72 stormwater, construction, and easement requirements with clause-by-clause checks plus photocited references.</p>
+              <ul class="mt-4 text-xs text-slate-600 space-y-1">
+                <li>• PASS / FAIL with rationale</li>
+                <li>• Linked ordinance excerpts</li>
+                <li>• Exportable PDF memo</li>
+              </ul>
+            </article>
+            <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+              <p class="text-xs font-semibold text-sky-600">Layer 2 · Plan consistency</p>
+              <h3 class="mt-2 text-lg font-semibold">Sheet-to-sheet alignment</h3>
+              <p class="mt-3 text-sm text-slate-600">Scans plan sets, calcs, and drainage reports to surface mismatched dimensions, missing callouts, and out-of-date details.</p>
+              <ul class="mt-4 text-xs text-slate-600 space-y-1">
+                <li>• Cross-sheet deltas summarized</li>
+                <li>• Missing references flagged</li>
+                <li>• Suggested fixes per document</li>
+              </ul>
+            </article>
+            <article class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+              <p class="text-xs font-semibold text-purple-600">Layer 3 · Reviewer pattern library</p>
+              <h3 class="mt-2 text-lg font-semibold">Anticipate comments</h3>
+              <p class="mt-3 text-sm text-slate-600">Learns from SJRWMD reviewer history to prefill notes on recurring clarifications, supporting attachments, and phrasing they prefer.</p>
+              <ul class="mt-4 text-xs text-slate-600 space-y-1">
+                <li>• Reviewer-specific playbooks</li>
+                <li>• Attachment reminders</li>
+                <li>• Ready-to-send response text</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Regional focus -->
+      <section class="max-w-5xl mx-auto px-4 py-12 grid gap-10 md:grid-cols-2">
+        <div class="space-y-4">
+          <p class="text-xs uppercase tracking-[0.4em] text-slate-500">Volusia &amp; SJRWMD</p>
+          <h2 class="text-2xl font-semibold tracking-tight">Regional intelligence, not generic QA</h2>
+          <p class="text-sm text-slate-600">PermitBot is tuned for the jurisdictions that dominate your workload. We keep calibration data fresh with every accepted package, so checks stay aligned with the reviewers who matter to you.</p>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li>• Volusia County stormwater, concurrency, and platting rule packs</li>
+            <li>• SJRWMD ERP focus with design storms, pond routing, and as-builts</li>
+            <li>• Exportable response packets for internal QA or client sign-off</li>
+          </ul>
+        </div>
+        <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.3em] text-slate-500">Reviewer readiness</p>
+            <h3 class="text-lg font-semibold">Trust-first output</h3>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center justify-between">
+              <span class="text-slate-500">Evidence packets</span>
+              <span class="font-semibold text-brand-dark">HTML + JSON + PDF</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-500">Source citations</span>
+              <span class="font-semibold text-brand-dark">Sheet + ordinance references</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-500">Confidence watermark</span>
+              <span class="font-semibold text-emerald-600">Reviewer-ready</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500">Every finding can be drilled down to the sentence, photo, or detail bubble that triggered it, so you can forward output without rewriting.</p>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-slate-200 bg-brand-bg">
       <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-600">
         <span>© <span id="year"></span> PermitBot.</span>
-        <span>Volusia &amp; Flagler early access.</span>
+        <span>Volusia &amp; SJRWMD pilots now enrolling.</span>
       </div>
     </footer>
   </div>
